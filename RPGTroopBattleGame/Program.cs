@@ -1,0 +1,3 @@
+﻿using RPGTroopBattleGame;
+
+MainMenu.Menu();

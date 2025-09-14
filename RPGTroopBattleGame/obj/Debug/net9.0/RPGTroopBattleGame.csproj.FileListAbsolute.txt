@@ -1,0 +1,14 @@
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\bin\Debug\net9.0\RPGTroopBattleGame.exe
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\bin\Debug\net9.0\RPGTroopBattleGame.deps.json
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\bin\Debug\net9.0\RPGTroopBattleGame.runtimeconfig.json
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\bin\Debug\net9.0\RPGTroopBattleGame.dll
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\bin\Debug\net9.0\RPGTroopBattleGame.pdb
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.AssemblyInfoInputs.cache
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.AssemblyInfo.cs
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.csproj.CoreCompileInputs.cache
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.dll
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\refint\RPGTroopBattleGame.dll
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.pdb
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.genruntimeconfig.cache
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\ref\RPGTroopBattleGame.dll
