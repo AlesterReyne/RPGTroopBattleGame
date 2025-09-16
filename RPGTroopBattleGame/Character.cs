@@ -1,16 +1,61 @@
-namespace RPGTroopBattleGame;
-
 public class Character
 {
+    // Basic character properties
     private string _name;
+    private string _characterClass;
 
+    // Stats properties
+    private int _maxHp;
+    private int _currentHp;
+    private int _attackPower;
+    private int _defensePower;
+    private int _criticalHitChance;
+    private int _damageMultiplier;
+
+    // Level and experience properties
+    private int _currentLevel;
+    private int _currentExp;
+    private int _expForLevelUp;
+
+    // Status effect properties
+    public bool IsFrozen { get; set; }
+    public int FrozenTurnsRemaining { get; set; }
+
+    public bool IsPoisoned { get; set; }
+    public int PoisonTurnsRemaining { get; set; }
+    public int PoisonDamagePerTurn { get; set; }
+
+    public bool IsShielded { get; set; }
+    public int ShieldTurnsRemaining { get; set; }
+    public int ShieldStrength { get; set; }
+
+    public bool IsEnraged { get; set; }
+    public int RageTurnsRemaining { get; set; }
+    public int RageAttackBoost { get; set; }
+
+    public bool IsDebuffed { get; set; }
+    public int DebuffTurnsRemaining { get; set; }
+    public int DefenseReduction { get; set; }
+
+    // Basic properties accessors
     public string Name
     {
-        set { _name = value; }
         get { return _name; }
+        set { _name = value; }
     }
 
-    private int _currentHp;
+    public string CharacterClass
+    {
+        get { return _characterClass; }
+        set { _characterClass = value; }
+    }
+
+    // Stats properties accessors
+    public int MaxHp
+    {
+        get { return _maxHp; }
+        set { _maxHp = value; }
+    }
 
     public int CurrentHp
     {
@@ -20,10 +65,10 @@ public class Character
             _currentHp = value;
             if (_currentHp < 0)
                 _currentHp = 0;
+            if (_currentHp > _maxHp)
+                _currentHp = _maxHp;
         }
     }
-
-    private int _attackPower;
 
     public int AttackPower
     {
@@ -31,36 +76,44 @@ public class Character
         set { _attackPower = value; }
     }
 
-    private int _defensePower;
-
     public int DefensePower
     {
-        set { _defensePower = value; }
         get { return _defensePower; }
+        set { _defensePower = value; }
     }
-
-    public int GetDefence()
-    {
-        Random random = new Random();
-        return random.Next(0, DefensePower + 1);
-    }
-
-    private int _criticalHitChance;
 
     public int CriticalHitChance
     {
-        set { _criticalHitChance = value; }
         get { return _criticalHitChance; }
+        set { _criticalHitChance = value; }
     }
-
-    private int _damageMultiplier;
 
     public int DamageMultiplier
     {
-        set { _damageMultiplier = value; }
         get { return _damageMultiplier; }
+        set { _damageMultiplier = value; }
     }
 
+    // Constructor
+    public Character(string name, int maxHp, int attackPower, int defence, int criticalHitChance,
+        int damageMultiplier, string characterClass = "")
+    {
+        Name = name;
+        MaxHp = maxHp;
+        CurrentHp = maxHp;
+        AttackPower = attackPower;
+        DefensePower = defence;
+        CriticalHitChance = criticalHitChance;
+        DamageMultiplier = damageMultiplier;
+        _currentLevel = 1;
+        _currentExp = 0;
+        _expForLevelUp = 1;
+        CharacterClass = characterClass;
+
+        InitializeStatusEffects();
+    }
+
+    // Combat methods
     public int GetDamage()
     {
         Random random = new Random();
@@ -73,80 +126,57 @@ public class Character
         return _attackPower;
     }
 
-    // Special abilities status effects
-
-    // Freeze effect
-    public bool IsFrozen { get; set; }
-    public int FrozenTurnsRemaining { get; set; }
-
-    // Poison effect
-    public bool IsPoisoned { get; set; }
-    public int PoisonTurnsRemaining { get; set; }
-    public int PoisonDamagePerTurn { get; set; }
-
-    // Shield effect
-    public bool IsShielded { get; set; }
-    public int ShieldTurnsRemaining { get; set; }
-    public int ShieldStrength { get; set; }
-
-    // Rage effect
-    public bool IsEnraged { get; set; }
-    public int RageTurnsRemaining { get; set; }
-    public int RageAttackBoost { get; set; }
-
-    // Debuff effect
-    public bool IsDebuffed { get; set; }
-    public int DebuffTurnsRemaining { get; set; }
-    public int DefenseReduction { get; set; }
-
-    private int _levelUp;
-
-    public int LevelUp
+    public int GetDefence()
     {
-        get { return _levelUp; }
+        Random random = new Random();
+        return random.Next(0, DefensePower + 1);
     }
 
-    private string _characterClass;
-
-    public string CharacterClass
+    // Experience and leveling methods
+    public void EnemyDefeated(int enemyMaxHp)
     {
-        get { return _characterClass; }
-        set { _characterClass = value; }
+        AddExperience();
+        RecoverHp(enemyMaxHp);
     }
 
-    // Constructor update
-    public Character(string name, int currentHp, int attackPower, int defence, int criticalHitChance,
-        int damageMultiplier, string characterClass = "")
+    public void AddExperience()
     {
-        this.Name = name;
-        this.CurrentHp = currentHp;
-        this.AttackPower = attackPower;
-        this.DefensePower = defence;
-        this.CriticalHitChance = criticalHitChance;
-        this.DamageMultiplier = damageMultiplier;
-        this.CharacterClass = characterClass;
-
-        // Initialize status effects
-        this.IsFrozen = false;
-        this.FrozenTurnsRemaining = 0;
-        this.IsPoisoned = false;
-        this.PoisonTurnsRemaining = 0;
-        this.PoisonDamagePerTurn = 0;
-        this.IsShielded = false;
-        this.ShieldTurnsRemaining = 0;
-        this.ShieldStrength = 0;
-        this.IsEnraged = false;
-        this.RageTurnsRemaining = 0;
-        this.RageAttackBoost = 0;
-        this.IsDebuffed = false;
-        this.DebuffTurnsRemaining = 0;
-        this.DefenseReduction = 0;
-
-        // special abilities
-        _levelUp = 0;
+        _currentExp++;
+        if (_currentExp >= _expForLevelUp)
+        {
+            _currentLevel++;
+            _currentExp = 0;
+            _expForLevelUp *= 2;
+            Console.WriteLine($"{_name} leveled up to level {_currentLevel}!");
+        }
     }
 
-    // Updated ToString to include class
+    public void RecoverHp(int enemyMaxHp)
+    {
+        int recoveryValue = enemyMaxHp / 100 * 20;
+        CurrentHp += recoveryValue;
+    }
+
+    // Helper methods
+    private void InitializeStatusEffects()
+    {
+        IsFrozen = false;
+        FrozenTurnsRemaining = 0;
+        IsPoisoned = false;
+        PoisonTurnsRemaining = 0;
+        PoisonDamagePerTurn = 0;
+        IsShielded = false;
+        ShieldTurnsRemaining = 0;
+        ShieldStrength = 0;
+        IsEnraged = false;
+        RageTurnsRemaining = 0;
+        RageAttackBoost = 0;
+        IsDebuffed = false;
+        DebuffTurnsRemaining = 0;
+        DefenseReduction = 0;
+    }
+
+    // String representation methods
     public override string ToString()
     {
         string statusEffects = "";
@@ -156,14 +186,13 @@ public class Character
         if (IsEnraged) statusEffects += " [Enraged]";
         if (IsDebuffed) statusEffects += " [Debuffed]";
 
-        return (
-            $"Name: {_name}\nClass: {_characterClass}\nHP: {_currentHp}\nAttack: {_attackPower}\nDefence: {_defensePower}\nCritical: {_criticalHitChance}{statusEffects}\nExp:{_levelUp}");
+        return
+            $"Name: {_name}\nClass: {_characterClass}\nHP: {_currentHp}\nAttack: {_attackPower}\nDefence: {_defensePower}\nCritical: {_criticalHitChance}{statusEffects}\nExp:{_currentLevel}";
     }
 
-    // Update existing FinalState method
     public string FinalState()
     {
-        return (
-            $"Name: {_name}\nClass: {_characterClass}\nHP: {_currentHp}\nLevel: {_levelUp}\n Loot: (in progress)");
+        return
+            $"Name: {_name}\nClass: {_characterClass}\nHP: {_currentHp}\nLevel: {_currentLevel}\n Loot: (in progress)";
     }
 }

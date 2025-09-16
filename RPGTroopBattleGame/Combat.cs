@@ -2,7 +2,7 @@ namespace RPGTroopBattleGame;
 
 public static class Combat
 {
-    public static Character Attack(Character attacker, Character defender)
+    public static void Attack(Character attacker, Character defender)
     {
         // Check if attacker is enraged
         int attackBoost = 0;
@@ -40,7 +40,11 @@ public static class Combat
         Console.WriteLine(
             $"{attacker.Name} attacks {defender.Name}.\n" +
             $"{previousHp} HP - ({damage} Damage - {defence} Defence) = {defender.CurrentHp} HP left.");
-        return defender;
+        if (defender.CurrentHp <= 0)
+        {
+            Console.WriteLine($"{defender.Name} has been defeated!");
+            attacker.EnemyDefeated(attacker.MaxHp);
+        }
     }
 
     // You can add special ability methods here in the future
@@ -79,7 +83,7 @@ public static class Combat
     }
 
     // Process status effects at the start of a character's turn
-    public static Character ProcessStatusEffects(Character character)
+    public static void ProcessStatusEffects(Character character)
     {
         // Process poison damage
         if (character.IsPoisoned)
@@ -145,7 +149,5 @@ public static class Combat
                 Console.WriteLine($"{character.Name} is no longer debuffed.");
             }
         }
-
-        return character;
     }
 }

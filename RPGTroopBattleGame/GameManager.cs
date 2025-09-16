@@ -33,15 +33,13 @@ public static class GameManager
             for (int i = 0; i < _playerTroop.Characters.Count; i++)
             {
                 var character = _playerTroop.Characters[i];
-                character = Combat.ProcessStatusEffects(character);
-                _playerTroop.UpdateTroop(i, character);
+                Combat.ProcessStatusEffects(character);
             }
 
             for (int i = 0; i < _enemyTroop.Characters.Count; i++)
             {
                 var character = _enemyTroop.Characters[i];
-                character = Combat.ProcessStatusEffects(character);
-                _enemyTroop.UpdateTroop(i, character);
+                Combat.ProcessStatusEffects(character);
             }
 
             // Player turn - all characters act
@@ -219,8 +217,7 @@ public static class GameManager
             Console.WriteLine($"Enemy {enemyCharacter.Name} targets {targetPlayer.Name}");
 
             // Enemy performs attack
-            targetPlayer = Combat.Attack(enemyCharacter, targetPlayer);
-            _playerTroop.UpdateTroop(targetIndex, targetPlayer);
+            Combat.Attack(enemyCharacter, targetPlayer);
 
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();

@@ -298,11 +298,6 @@ public class Troop
         return false;
     }
 
-    public void UpdateTroop(int index, Character character)
-    {
-        _characters[index] = character;
-    }
-
     // New method to support future item/equipment system
     public void ApplyLoot(int characterIndex, string lootItem)
     {

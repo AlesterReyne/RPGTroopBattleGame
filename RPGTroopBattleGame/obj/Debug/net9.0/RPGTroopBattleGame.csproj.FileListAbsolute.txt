@@ -12,3 +12,4 @@ C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGam
 C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.pdb
 C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.genruntimeconfig.cache
 C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\ref\RPGTroopBattleGame.dll
+C:\Users\areyn\RiderProjects\TiltanStudying\RPGTroopBattleGame\RPGTroopBattleGame\obj\Debug\net9.0\RPGTroopBattleGame.sourcelink.json
