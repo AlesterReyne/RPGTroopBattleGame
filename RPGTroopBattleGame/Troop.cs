@@ -9,6 +9,8 @@ public class Troop
         get { return _characters; }
     }
 
+    int maxCharacters = 6;
+
     public void CreateTroop()
     {
         int numberOfCharacters = 3;
@@ -18,19 +20,20 @@ public class Troop
 
             // First, choose a character class
             Console.WriteLine($"Choose class for character {i + 1}:");
-            Console.WriteLine("1 - Knight (High HP, Balanced Attack/Defense)");
+            Console.WriteLine("1 - Mage (Low HP, High Attack)");
             Console.WriteLine("2 - Rogue (Medium HP, High Critical Chance)");
-            Console.WriteLine("3 - Mage (Low HP, High Attack)");
+            Console.WriteLine("3 - Witch (Low HP, Debuff Abilities)");
+            Console.WriteLine("4 - Knight (High HP, Balanced Attack/Defense)");
+            Console.WriteLine("5 - Priest (Low HP, Healing Abilities)");
+            Console.WriteLine("6 - Berserk (High HP, High Attack, Low Defense)");
 
-            string classChoice;
-            do
+            int choice;
+            while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > maxCharacters)
             {
-                classChoice = Console.ReadLine();
-                if (classChoice != "1" && classChoice != "2" && classChoice != "3")
-                {
-                    Console.WriteLine("Invalid choice. Please enter 1, 2, or 3:");
-                }
-            } while (classChoice != "1" && classChoice != "2" && classChoice != "3");
+                Console.WriteLine($"Invalid choice. Please enter a number between 1 and {maxCharacters}:");
+            }
+
+            string classChoice = choice.ToString();
 
             // Pre-populate with default values based on class
             string name = "";
@@ -42,32 +45,58 @@ public class Troop
 
             switch (classChoice)
             {
-                case "1":
-                    characterClass = "Knight";
-                    name = "Knight";
-                    healthPoints = 150;
-                    attackPower = 20;
-                    defensePower = 20;
-                    criticalHitChance = 5;
-                    damageMultiplier = 2;
-                    break;
-                case "2":
-                    characterClass = "Rogue";
-                    name = "Rogue";
-                    healthPoints = 100;
-                    attackPower = 10;
-                    defensePower = 10;
-                    criticalHitChance = 20;
-                    damageMultiplier = 4;
-                    break;
-                case "3":
+                case "1": // Mage (Low HP, High Attack)
                     characterClass = "Mage";
-                    name = "Mage";
+                    name = "Hans";
                     healthPoints = 50;
                     attackPower = 30;
                     defensePower = 5;
                     criticalHitChance = 10;
-                    damageMultiplier = 3;
+                    break;
+
+                case "2": // Rogue (Medium HP, High Crit)
+                    characterClass = "Rogue";
+                    name = "Karl";
+                    healthPoints = 100; // medium
+                    attackPower = 12; // modest
+                    defensePower = 10;
+                    criticalHitChance = 25; // emphasize crit
+                    break;
+
+                case "3": // Witch (Low HP, Debuff)
+                    characterClass = "Witch";
+                    name = "Bojena";
+                    healthPoints = 60; // low
+                    attackPower = 18;
+                    defensePower = 8;
+                    criticalHitChance = 5;
+                    break;
+
+                case "4": // Knight (High HP, Balanced)
+                    characterClass = "Knight";
+                    name = "Henry";
+                    healthPoints = 150; // high
+                    attackPower = 20;
+                    defensePower = 20;
+                    criticalHitChance = 5;
+                    break;
+
+                case "5": // Priest (Low HP, Healing)
+                    characterClass = "Priest";
+                    name = "Boguta";
+                    healthPoints = 70; // low
+                    attackPower = 10;
+                    defensePower = 10;
+                    criticalHitChance = 5;
+                    break;
+
+                case "6": // Berserk (High HP, High Attack, Low Defense)
+                    characterClass = "Berserk";
+                    name = "Ragnar";
+                    healthPoints = 140; // high
+                    attackPower = 28; // high
+                    defensePower = 6; // low
+                    criticalHitChance = 10;
                     break;
             }
 
@@ -122,20 +151,11 @@ public class Troop
                     // Limit crit chance to a reasonable range
                     criticalHitChance = Math.Max(1, Math.Min(customCrit, 30));
                 }
-
-                // Damage Multiplier
-                Console.WriteLine($"Damage Multiplier (default {damageMultiplier}, range 2-5): ");
-                string multInput = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(multInput) && int.TryParse(multInput, out int customMult))
-                {
-                    // Limit damage multiplier to a reasonable range
-                    damageMultiplier = Math.Max(2, Math.Min(customMult, 5));
-                }
             }
 
             // Create and add character
             Character character = new Character(name, healthPoints, attackPower, defensePower, criticalHitChance,
-                damageMultiplier, characterClass);
+                characterClass);
             _characters.Add(character);
 
             Console.WriteLine($"\n{name} has been added to your troop!");
@@ -149,9 +169,9 @@ public class Troop
     public void InitializeDefaultTroop()
     {
         _characters.Clear();
-        _characters.Add(new Character("Knight", 150, 20, 20, 5, 2, "Knight"));
-        _characters.Add(new Character("Rogue", 100, 10, 10, 20, 4, "Rogue"));
-        _characters.Add(new Character("Priest", 50, 30, 5, 10, 3, "Priest"));
+        _characters.Add(new Character("Knight", 150, 20, 20, 5, "Knight"));
+        _characters.Add(new Character("Rogue", 100, 10, 10, 20, "Rogue"));
+        _characters.Add(new Character("Priest", 50, 30, 5, 10, "Priest"));
     }
 
     public void InitializeEnemyTroop()
@@ -179,7 +199,7 @@ public class Troop
         for (int i = 0; i < 3; i++)
         {
             string enemyType = selectedEnemies[i];
-            int hp, attack, defense, critChance, damageMultiplier;
+            int hp, attack, defense, critChance;
 
             // Scale enemy difficulty based on position (first is weakest, last is strongest)
             double easyDifficulty = 0.8;
@@ -198,7 +218,6 @@ public class Troop
                     attack = (int)(15 * difficultyScalar);
                     defense = (int)(10 * difficultyScalar);
                     critChance = 5;
-                    damageMultiplier = 2;
                     break;
 
                 case "Villain":
@@ -209,7 +228,6 @@ public class Troop
                     attack = (int)(20 * difficultyScalar);
                     defense = (int)(15 * difficultyScalar);
                     critChance = 10;
-                    damageMultiplier = 3;
                     break;
 
                 case "Dark Knight":
@@ -220,7 +238,6 @@ public class Troop
                     attack = (int)(25 * difficultyScalar);
                     defense = (int)(12 * difficultyScalar);
                     critChance = 15;
-                    damageMultiplier = 3;
                     break;
 
                 default:
@@ -228,7 +245,6 @@ public class Troop
                     attack = (int)(18 * difficultyScalar);
                     defense = (int)(12 * difficultyScalar);
                     critChance = 10;
-                    damageMultiplier = 2;
                     break;
             }
 
@@ -238,7 +254,7 @@ public class Troop
             defense = (int)(defense * (0.9 + random.NextDouble() * 0.2));
 
             // Create and add the enemy
-            _characters.Add(new Character(enemyType, hp, attack, defense, critChance, damageMultiplier, enemyType));
+            _characters.Add(new Character(enemyType, hp, attack, defense, critChance, enemyType));
         }
     }
 
@@ -246,33 +262,29 @@ public class Troop
     {
         if (isFinalState)
         {
-            // Display final state for each character (alive or dead)
-            foreach (var character in _characters)
-            {
+            foreach (Character character in _characters)
                 Console.WriteLine(character.FinalState());
-            }
         }
         else
         {
-            // Display only living characters with numbers
-            int livingCharacters = 0;
-            foreach (var character in _characters)
+            int memberNumber = 0;
+            foreach (Character character in _characters)
             {
                 if (character.CurrentHp > 0)
                 {
-                    livingCharacters++;
-                    int index = _characters.IndexOf(character);
-                    Console.WriteLine($"Member {livingCharacters}: {character.Name}");
+                    memberNumber++;
+                    Console.WriteLine($"Member {memberNumber}: {character.Name}");
                     Console.WriteLine($"Class: {character.CharacterClass}");
                     Console.WriteLine($"HP: {character.CurrentHp}");
                     Console.WriteLine($"Attack: {character.AttackPower}");
-                    Console.WriteLine($"Defence: {character.DefensePower}");
+                    Console.WriteLine($"Defense: {character.DefensePower}"); // fixed label
                     Console.WriteLine($"Critical: {character.CriticalHitChance}%");
                     Console.WriteLine();
                 }
             }
         }
     }
+
 
     public bool GameOverCheck(bool isPlayer)
     {

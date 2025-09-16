@@ -17,7 +17,7 @@ public static class GameManager
         }
         else
         {
-            // custom troop implementation
+            _playerTroop.CreateTroop();
         }
 
         _enemyTroop.InitializeEnemyTroop();
@@ -26,7 +26,7 @@ public static class GameManager
     public static void GameLoop()
     {
         Console.Clear();
-
+        bool isVictory = false;
         // Main game loop - continue until one side is defeated
         while (!(_playerTroop.GameOverCheck(true) || _enemyTroop.GameOverCheck(false)))
         {
@@ -60,13 +60,8 @@ public static class GameManager
             // At the beginning of GameLoop or at the start of each round
         }
 
-        // Game over a sequence
-        Console.Clear();
-        Console.WriteLine("Game Over");
-        Console.WriteLine("\nFinal state:");
-        _playerTroop.DisplayTroop(true);
-        _enemyTroop.DisplayTroop(true);
-
+        isVictory = _enemyTroop.GameOverCheck(false);
+        BattleResults.DisplayResults(_playerTroop, isVictory);
         Console.WriteLine("\nPress any key to return to main menu...");
         Console.ReadKey();
         MainMenu.Menu();
@@ -135,7 +130,8 @@ public static class GameManager
             // Choose action
             Console.WriteLine("\nChoose action:");
             Console.WriteLine("1 - Attack");
-            Console.WriteLine("2 - Special ability");
+            Console.WriteLine(
+                $"2 - Special ability. {SpecialAbilities.GetDescription(playerCharacter.CharacterClass)}");
 
             int actionChoice;
             do
@@ -156,7 +152,8 @@ public static class GameManager
                     break;
                 case 2:
                     // Special ability
-                    Combat.UseSpecialAbility(playerCharacter, targetEnemy, playerCharacter.Name);
+                    Combat.UseSpecialAbility(playerCharacter, targetEnemy, playerCharacter.Name,
+                        playerCharacter.CurrentLevel);
                     break;
             }
 

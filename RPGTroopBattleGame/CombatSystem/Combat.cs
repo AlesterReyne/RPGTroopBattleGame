@@ -1,3 +1,5 @@
+using RPGTroopBattleGame.LootSystem;
+
 namespace RPGTroopBattleGame;
 
 public static class Combat
@@ -44,15 +46,26 @@ public static class Combat
         {
             Console.WriteLine($"{defender.Name} has been defeated!");
             attacker.EnemyDefeated(attacker.MaxHp);
+            // Generate loot upon defeating an enemy
+            Item loot = LootGenerator.GenerateLoot();
+            attacker.Inventory.AddItem(loot);
+            Console.WriteLine(
+                $"{loot.Name} dropped! By type: {loot.Type} - Rarity: {loot.Rarity} - Gold value: {loot.Value} - Description: {loot.Description}");
         }
     }
 
-    // You can add special ability methods here in the future
-    // For example:
-
-    public static void UseSpecialAbility(Character player, Character target, string className)
+// You can add special ability methods here in the future
+// For example:
+    public static void UseSpecialAbility(Character player, Character target, string className, int requiredLevel)
     {
         // Implement special abilities based on character class
+        // Tier Level 2 abilities
+        if (requiredLevel < 2)
+        {
+            Console.WriteLine("You must be level 2 or higher to use this ability!");
+            return;
+        }
+
         switch (className)
         {
             case "Mage":
@@ -82,7 +95,7 @@ public static class Combat
         }
     }
 
-    // Process status effects at the start of a character's turn
+// Process status effects at the start of a character's turn
     public static void ProcessStatusEffects(Character character)
     {
         // Process poison damage

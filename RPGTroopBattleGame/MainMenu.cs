@@ -14,7 +14,7 @@ public static class MainMenu
     {
         Console.Clear();
         Console.WriteLine(
-            "Please choose an option:\n1 - Create default troop\n2 - Create troop (in progress)");
+            "Please choose an option:\n1 - Create default troop\n2 - Create troop manually");
         string input = Console.ReadLine();
         switch (input)
         {
@@ -24,6 +24,7 @@ public static class MainMenu
                 break;
             case "2":
                 GameManager.InitializeTroops(false);
+                ChooseAction();
                 break;
             default:
                 Console.WriteLine("Invalid choice.");

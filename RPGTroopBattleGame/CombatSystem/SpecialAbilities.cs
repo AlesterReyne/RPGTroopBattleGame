@@ -64,4 +64,18 @@ public static class SpecialAbilities
         Console.WriteLine(
             $"{target.Name}'s defense is reduced by {target.DefenseReduction = 5} for {target.DebuffTurnsRemaining} turns!");
     }
+
+    public static string GetDescription(string className)
+    {
+        return className switch
+        {
+            "Mage" => "Freeze enemy for 2 turns (cannot act).",
+            "Rogue" => "Poison enemy for 3 turns (5 damage per turn).",
+            "Priest" => "Restore HP to an ally instantly.",
+            "Knight" => "Absorb 10 damage per hit for 3 turns.",
+            "Berserk" => "Increase attack power by +10 for 3 turns.",
+            "Witch" => "Reduce enemy defense by 5 for 3 turns.",
+            _ => "Unknown ability"
+        };
+    }
 }

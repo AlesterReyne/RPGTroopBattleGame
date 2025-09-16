@@ -1,3 +1,6 @@
+using RPGTroopBattleGame;
+using RPGTroopBattleGame.LootSystem;
+
 public class Character
 {
     // Basic character properties
@@ -16,6 +19,10 @@ public class Character
     private int _currentLevel;
     private int _currentExp;
     private int _expForLevelUp;
+    private float _levelModifier = 1f;
+
+    // Inventory properties
+    public Inventory Inventory;
 
     // Status effect properties
     public bool IsFrozen { get; set; }
@@ -53,7 +60,7 @@ public class Character
     // Stats properties accessors
     public int MaxHp
     {
-        get { return _maxHp; }
+        get { return (int)(_attackPower * LevelModifier); }
         set { _maxHp = value; }
     }
 
@@ -70,21 +77,32 @@ public class Character
         }
     }
 
+    public int CurrentLevel
+    {
+        get { return _currentLevel; }
+    }
+
+    public float LevelModifier
+    {
+        get { return _levelModifier; }
+        set { _levelModifier = (float)(1 + 0.1 * _currentLevel); }
+    }
+
     public int AttackPower
     {
-        get { return _attackPower; }
+        get { return (int)(_attackPower * LevelModifier); }
         set { _attackPower = value; }
     }
 
     public int DefensePower
     {
-        get { return _defensePower; }
+        get { return (int)(_defensePower * LevelModifier); }
         set { _defensePower = value; }
     }
 
     public int CriticalHitChance
     {
-        get { return _criticalHitChance; }
+        get { return (int)(_criticalHitChance * LevelModifier); }
         set { _criticalHitChance = value; }
     }
 
@@ -96,7 +114,7 @@ public class Character
 
     // Constructor
     public Character(string name, int maxHp, int attackPower, int defence, int criticalHitChance,
-        int damageMultiplier, string characterClass = "")
+        string characterClass = "")
     {
         Name = name;
         MaxHp = maxHp;
@@ -104,11 +122,12 @@ public class Character
         AttackPower = attackPower;
         DefensePower = defence;
         CriticalHitChance = criticalHitChance;
-        DamageMultiplier = damageMultiplier;
+        DamageMultiplier = 2;
         _currentLevel = 1;
         _currentExp = 0;
         _expForLevelUp = 1;
         CharacterClass = characterClass;
+        Inventory = new Inventory();
 
         InitializeStatusEffects();
     }
