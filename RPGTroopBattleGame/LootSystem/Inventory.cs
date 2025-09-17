@@ -2,10 +2,13 @@ namespace RPGTroopBattleGame.LootSystem;
 
 public class Inventory
 {
+    // === Fields ===
     private List<Item> _items;
     private int _maxCapacity;
     private int _gold;
 
+
+    // === Constructor ===
     public Inventory(int maxCapacity = 20)
     {
         _items = new List<Item>();
@@ -13,6 +16,8 @@ public class Inventory
         _gold = 0;
     }
 
+
+    // === Item Management ===
     public void AddItem(Item item)
     {
         if (_items.Count >= _maxCapacity)
@@ -21,6 +26,7 @@ public class Inventory
             return;
         }
 
+        // Gold is tracked separately
         if (item.Type == ItemType.Gold)
         {
             _gold += item.Value;
@@ -41,6 +47,8 @@ public class Inventory
         _items.Remove(item);
     }
 
+
+    // === Getters ===
     public List<Item> GetItems()
     {
         return _items.ToList();

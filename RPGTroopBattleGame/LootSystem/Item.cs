@@ -1,5 +1,6 @@
 namespace RPGTroopBattleGame.LootSystem;
 
+// === Item Categories ===
 public enum ItemType
 {
     Gold,
@@ -7,6 +8,7 @@ public enum ItemType
     Consumable
 }
 
+// === Item Rarity Levels ===
 public enum ItemRarity
 {
     Common,
@@ -16,15 +18,19 @@ public enum ItemRarity
     Legendary
 }
 
+// === Item Definition ===
 public class Item
 {
+    // === Properties ===
     public string Name { get; set; }
     public ItemType Type { get; set; }
     public ItemRarity Rarity { get; set; }
     public int Value { get; set; }
     public string Description { get; set; }
-    public Stats Bonuses { get; set; }
+    public Stats Bonuses { get; set; }   // Only used for Equipment
 
+
+    // === Constructor ===
     public Item(string name, ItemType type, ItemRarity rarity, int value, string description)
     {
         Name = name;
@@ -32,6 +38,8 @@ public class Item
         Rarity = rarity;
         Value = value;
         Description = description;
+
+        // Equipment can grant stat bonuses (default = 0)
         Bonuses = new Stats();
     }
 }

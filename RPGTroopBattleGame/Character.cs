@@ -3,11 +3,11 @@ using RPGTroopBattleGame.LootSystem;
 
 public class Character
 {
-    // Basic character properties
+    // === Basic Identity ===
     private string _name;
     private string _characterClass;
 
-    // Stats properties
+    // === Stats ===
     private int _maxHp;
     private int _currentHp;
     private int _attackPower;
@@ -15,16 +15,16 @@ public class Character
     private int _criticalHitChance;
     private int _damageMultiplier;
 
-    // Level and experience properties
+    // === Level & Experience ===
     private int _currentLevel;
     private int _currentExp;
     private int _expForLevelUp;
     private float _levelModifier = 1f;
 
-    // Inventory properties
+    // === Inventory ===
     public Inventory Inventory;
 
-    // Status effect properties
+    // === Status Effects ===
     public bool IsFrozen { get; set; }
     public int FrozenTurnsRemaining { get; set; }
 
@@ -44,7 +44,8 @@ public class Character
     public int DebuffTurnsRemaining { get; set; }
     public int DefenseReduction { get; set; }
 
-    // Basic properties accessors
+
+    // === Properties ===
     public string Name
     {
         get { return _name; }
@@ -57,10 +58,9 @@ public class Character
         set { _characterClass = value; }
     }
 
-    // Stats properties accessors
     public int MaxHp
     {
-        get { return (int)(_attackPower * LevelModifier); }
+        get { return (int)(_attackPower * LevelModifier); } // note: currently scales with attackPower
         set { _maxHp = value; }
     }
 
@@ -70,17 +70,12 @@ public class Character
         set
         {
             _currentHp = value;
-            if (_currentHp < 0)
-                _currentHp = 0;
-            if (_currentHp > _maxHp)
-                _currentHp = _maxHp;
+            if (_currentHp < 0) _currentHp = 0;
+            if (_currentHp > _maxHp) _currentHp = _maxHp;
         }
     }
 
-    public int CurrentLevel
-    {
-        get { return _currentLevel; }
-    }
+    public int CurrentLevel => _currentLevel;
 
     public float LevelModifier
     {
@@ -112,9 +107,9 @@ public class Character
         set { _damageMultiplier = value; }
     }
 
-    // Constructor
-    public Character(string name, int maxHp, int attackPower, int defence, int criticalHitChance,
-        string characterClass = "")
+
+    // === Constructor ===
+    public Character(string name, int maxHp, int attackPower, int defence, int criticalHitChance, string characterClass = "")
     {
         Name = name;
         MaxHp = maxHp;
@@ -123,16 +118,18 @@ public class Character
         DefensePower = defence;
         CriticalHitChance = criticalHitChance;
         DamageMultiplier = 2;
+
         _currentLevel = 1;
         _currentExp = 0;
         _expForLevelUp = 1;
         CharacterClass = characterClass;
-        Inventory = new Inventory();
 
+        Inventory = new Inventory();
         InitializeStatusEffects();
     }
 
-    // Combat methods
+
+    // === Combat Methods ===
     public int GetDamage()
     {
         Random random = new Random();
@@ -151,7 +148,8 @@ public class Character
         return random.Next(0, DefensePower + 1);
     }
 
-    // Experience and leveling methods
+
+    // === Experience & Leveling ===
     public void EnemyDefeated(int enemyMaxHp)
     {
         AddExperience();
@@ -161,11 +159,13 @@ public class Character
     public void AddExperience()
     {
         _currentExp++;
+
         if (_currentExp >= _expForLevelUp)
         {
             _currentLevel++;
             _currentExp = 0;
             _expForLevelUp *= 2;
+
             Console.WriteLine($"{_name} leveled up to level {_currentLevel}!");
         }
     }
@@ -176,26 +176,32 @@ public class Character
         CurrentHp += recoveryValue;
     }
 
-    // Helper methods
+
+    // === Helpers ===
     private void InitializeStatusEffects()
     {
         IsFrozen = false;
         FrozenTurnsRemaining = 0;
+
         IsPoisoned = false;
         PoisonTurnsRemaining = 0;
         PoisonDamagePerTurn = 0;
+
         IsShielded = false;
         ShieldTurnsRemaining = 0;
         ShieldStrength = 0;
+
         IsEnraged = false;
         RageTurnsRemaining = 0;
         RageAttackBoost = 0;
+
         IsDebuffed = false;
         DebuffTurnsRemaining = 0;
         DefenseReduction = 0;
     }
 
-    // String representation methods
+
+    // === String Representations ===
     public override string ToString()
     {
         string statusEffects = "";
@@ -206,12 +212,22 @@ public class Character
         if (IsDebuffed) statusEffects += " [Debuffed]";
 
         return
-            $"Name: {_name}\nClass: {_characterClass}\nHP: {_currentHp}\nAttack: {_attackPower}\nDefence: {_defensePower}\nCritical: {_criticalHitChance}{statusEffects}\nExp:{_currentLevel}";
+            $"Name: {_name}\n" +
+            $"Class: {_characterClass}\n" +
+            $"HP: {_currentHp}\n" +
+            $"Attack: {_attackPower}\n" +
+            $"Defence: {_defensePower}\n" +
+            $"Critical: {_criticalHitChance}{statusEffects}\n" +
+            $"Exp: {_currentLevel}";
     }
 
     public string FinalState()
     {
         return
-            $"Name: {_name}\nClass: {_characterClass}\nHP: {_currentHp}\nLevel: {_currentLevel}\n Loot: (in progress)";
+            $"Name: {_name}\n" +
+            $"Class: {_characterClass}\n" +
+            $"HP: {_currentHp}\n" +
+            $"Level: {_currentLevel}\n" +
+            $"Loot: (in progress)";
     }
 }

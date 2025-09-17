@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\areyn\\RiderProjects\\TiltanStudying\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj": {}
+    "C:\\Work\\Tiltan\\Unity\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj": {}
   },
   "projects": {
-    "C:\\Users\\areyn\\RiderProjects\\TiltanStudying\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj": {
+    "C:\\Work\\Tiltan\\Unity\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\areyn\\RiderProjects\\TiltanStudying\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj",
+        "projectUniqueName": "C:\\Work\\Tiltan\\Unity\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj",
         "projectName": "RPGTroopBattleGame",
-        "projectPath": "C:\\Users\\areyn\\RiderProjects\\TiltanStudying\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj",
+        "projectPath": "C:\\Work\\Tiltan\\Unity\\RPGTroopBattleGame\\RPGTroopBattleGame\\RPGTroopBattleGame.csproj",
         "packagesPath": "C:\\Users\\areyn\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\areyn\\RiderProjects\\TiltanStudying\\RPGTroopBattleGame\\RPGTroopBattleGame\\obj\\",
+        "outputPath": "C:\\Work\\Tiltan\\Unity\\RPGTroopBattleGame\\RPGTroopBattleGame\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\areyn\\AppData\\Roaming\\NuGet\\NuGet.Config"

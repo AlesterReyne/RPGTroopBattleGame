@@ -4,23 +4,27 @@ namespace RPGTroopBattleGame;
 
 public static class BattleResults
 {
+    /// Displays the results of a battle, including victory/defeat,
+    /// surviving characters, and all loot acquired.
     public static void DisplayResults(Troop playerTroop, bool isVictory)
     {
         Console.Clear();
         Console.WriteLine("=== BATTLE RESULTS ===");
         Console.WriteLine(isVictory ? "VICTORY!" : "DEFEAT!");
+
         Console.WriteLine("\nSurviving Characters:");
 
         int totalGold = 0;
         int totalItems = 0;
 
+        // Display results for each surviving character
         foreach (Character character in playerTroop.Characters)
         {
             Console.WriteLine($"\n{character.Name} ({character.CharacterClass})");
             Console.WriteLine($"Final HP: {character.CurrentHp}/{character.MaxHp}");
             Console.WriteLine($"Level: {character.CurrentLevel}");
 
-            // Display character's loot
+            // --- Loot per character ---
             List<Item> items = character.Inventory.GetItems();
             int gold = character.Inventory.GetGold();
 
@@ -30,6 +34,8 @@ public static class BattleResults
             foreach (Item item in items)
             {
                 Console.WriteLine($"- {item.Name} ({item.Rarity}) Value: {item.Value}");
+
+                // Display equipment bonuses if applicable
                 if (item.Type == ItemType.Equipment)
                 {
                     Console.WriteLine(
@@ -41,6 +47,7 @@ public static class BattleResults
             totalItems += items.Count;
         }
 
+        // --- Summary of total loot ---
         Console.WriteLine($"\nTotal Battle Gains:");
         Console.WriteLine($"- Gold: {totalGold}");
         Console.WriteLine($"- Items: {totalItems}");

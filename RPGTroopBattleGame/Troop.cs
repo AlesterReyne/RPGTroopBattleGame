@@ -2,23 +2,27 @@ namespace RPGTroopBattleGame;
 
 public class Troop
 {
+    // === Members ===
     private List<Character> _characters = new List<Character>();
-
     public List<Character> Characters
     {
         get { return _characters; }
     }
 
-    int maxCharacters = 6;
+    // Max available classes for selection menu
+    private int maxCharacters = 6;
 
+
+    // === Troop Creation (Manual) ===
     public void CreateTroop()
     {
         int numberOfCharacters = 3;
+
         for (int i = 0; i < numberOfCharacters; i++)
         {
             string characterClass = "";
 
-            // First, choose a character class
+            // --- Choose class ---
             Console.WriteLine($"Choose class for character {i + 1}:");
             Console.WriteLine("1 - Mage (Low HP, High Attack)");
             Console.WriteLine("2 - Rogue (Medium HP, High Critical Chance)");
@@ -35,13 +39,13 @@ public class Troop
 
             string classChoice = choice.ToString();
 
-            // Pre-populate with default values based on class
+            // --- Defaults per class ---
             string name = "";
             int healthPoints = 0;
             int attackPower = 0;
             int defensePower = 0;
             int criticalHitChance = 0;
-            int damageMultiplier = 0;
+            int damageMultiplier = 0; // kept for future use / parity
 
             switch (classChoice)
             {
@@ -58,7 +62,7 @@ public class Troop
                     characterClass = "Rogue";
                     name = "Karl";
                     healthPoints = 100; // medium
-                    attackPower = 12; // modest
+                    attackPower = 12;   // modest
                     defensePower = 10;
                     criticalHitChance = 25; // emphasize crit
                     break;
@@ -66,7 +70,7 @@ public class Troop
                 case "3": // Witch (Low HP, Debuff)
                     characterClass = "Witch";
                     name = "Bojena";
-                    healthPoints = 60; // low
+                    healthPoints = 60;  // low
                     attackPower = 18;
                     defensePower = 8;
                     criticalHitChance = 5;
@@ -84,7 +88,7 @@ public class Troop
                 case "5": // Priest (Low HP, Healing)
                     characterClass = "Priest";
                     name = "Boguta";
-                    healthPoints = 70; // low
+                    healthPoints = 70;  // low
                     attackPower = 10;
                     defensePower = 10;
                     criticalHitChance = 5;
@@ -94,13 +98,13 @@ public class Troop
                     characterClass = "Berserk";
                     name = "Ragnar";
                     healthPoints = 140; // high
-                    attackPower = 28; // high
-                    defensePower = 6; // low
+                    attackPower = 28;   // high
+                    defensePower = 6;   // low
                     criticalHitChance = 10;
                     break;
             }
 
-            // Allow customization of the name
+            // --- Optional: custom name ---
             Console.WriteLine($"Enter a name for your {characterClass} (press Enter to use default '{name}'): ");
             string customName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(customName))
@@ -108,56 +112,58 @@ public class Troop
                 name = customName;
             }
 
-            // Allow customization of stats within class limits
+            // --- Optional: tweak stats within bounds ---
             Console.WriteLine("\nCustomize character stats? (y/n)");
             string customize = Console.ReadLine().ToLower();
 
             if (customize == "y")
             {
-                // Health Points
-                Console.WriteLine(
-                    $"Health Points (default {healthPoints}, range {healthPoints - 20}-{healthPoints + 20}): ");
+                // HP
+                Console.WriteLine($"Health Points (default {healthPoints}, range {healthPoints - 20}-{healthPoints + 20}): ");
                 string hpInput = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(hpInput) && int.TryParse(hpInput, out int customHP))
                 {
-                    // Limit HP to a reasonable range based on class
                     healthPoints = Math.Max(healthPoints - 20, Math.Min(customHP, healthPoints + 20));
                 }
 
-                // Attack Power
+                // ATK
                 Console.WriteLine($"Attack Power (default {attackPower}, range {attackPower - 5}-{attackPower + 5}): ");
                 string atkInput = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(atkInput) && int.TryParse(atkInput, out int customAtk))
                 {
-                    // Limit attack to a reasonable range based on class
                     attackPower = Math.Max(attackPower - 5, Math.Min(customAtk, attackPower + 5));
                 }
 
-                // Defense Power
-                Console.WriteLine(
-                    $"Defense Power (default {defensePower}, range {defensePower - 5}-{defensePower + 5}): ");
+                // DEF
+                Console.WriteLine($"Defense Power (default {defensePower}, range {defensePower - 5}-{defensePower + 5}): ");
                 string defInput = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(defInput) && int.TryParse(defInput, out int customDef))
                 {
-                    // Limit defense to a reasonable range based on class
                     defensePower = Math.Max(defensePower - 5, Math.Min(customDef, defensePower + 5));
                 }
 
-                // Critical Hit Chance
+                // CRIT
                 Console.WriteLine($"Critical Hit Chance (default {criticalHitChance}, range 1-30): ");
                 string critInput = Console.ReadLine();
                 if (!string.IsNullOrWhiteSpace(critInput) && int.TryParse(critInput, out int customCrit))
                 {
-                    // Limit crit chance to a reasonable range
                     criticalHitChance = Math.Max(1, Math.Min(customCrit, 30));
                 }
             }
 
-            // Create and add character
-            Character character = new Character(name, healthPoints, attackPower, defensePower, criticalHitChance,
-                characterClass);
+            // --- Create character ---
+            Character character = new Character(
+                name,
+                healthPoints,
+                attackPower,
+                defensePower,
+                criticalHitChance,
+                characterClass
+            );
+
             _characters.Add(character);
 
+            // --- Feedback ---
             Console.WriteLine($"\n{name} has been added to your troop!");
             Console.WriteLine(character.ToString());
             Console.WriteLine("\nPress any key to continue...");
@@ -166,28 +172,31 @@ public class Troop
         }
     }
 
+
+    // === Troop Creation (Default) ===
     public void InitializeDefaultTroop()
     {
         _characters.Clear();
-        _characters.Add(new Character("Knight", 150, 20, 20, 5, "Knight"));
-        _characters.Add(new Character("Rogue", 100, 10, 10, 20, "Rogue"));
-        _characters.Add(new Character("Priest", 50, 30, 5, 10, "Priest"));
+        _characters.Add(new Character("Knight", 150, 20, 20, 5,  "Knight"));
+        _characters.Add(new Character("Rogue",  100, 10, 10, 20, "Rogue"));
+        _characters.Add(new Character("Priest",  50, 30,  5, 10, "Priest"));
     }
 
+
+    // === Enemy Troop Creation ===
     public void InitializeEnemyTroop()
     {
         _characters.Clear();
         Random random = new Random();
 
-        // Create a balanced enemy troop
-        // Different enemy types for variety
+        // Pool of enemy archetypes
         string[] enemyTypes =
         {
             "Bandit", "Villain", "Poacher", "Orc", "Goblin", "Skeleton",
             "Wolf", "Dark Knight", "Cultist"
         };
 
-        // Get 3 random enemy types
+        // Pick 3 random enemy types
         List<string> selectedEnemies = new List<string>();
         for (int i = 0; i < 3; i++)
         {
@@ -195,25 +204,23 @@ public class Troop
             selectedEnemies.Add(enemyType);
         }
 
-        // Add enemies with more balanced stats (not just HP=1)
+        // Create 3 enemies with difficulty scaling (0.8, 1.0, 1.2)
         for (int i = 0; i < 3; i++)
         {
             string enemyType = selectedEnemies[i];
             int hp, attack, defense, critChance;
 
-            // Scale enemy difficulty based on position (first is weakest, last is strongest)
-            double easyDifficulty = 0.8;
+            double easyDifficulty   = 0.8;
             double mediumDifficulty = 1.0;
-            double hardDifficulty = 1.2;
+            double hardDifficulty   = 1.2;
             double difficultyScalar = easyDifficulty + (i * 0.2); // 0.8, 1.0, 1.2
 
-            // Base stats depend on enemy type
+            // Base stats per type
             switch (enemyType)
             {
                 case "Bandit":
                 case "Poacher":
                 case "Goblin":
-                    // Weaker enemies
                     hp = (int)(30 * difficultyScalar);
                     attack = (int)(15 * difficultyScalar);
                     defense = (int)(10 * difficultyScalar);
@@ -223,7 +230,6 @@ public class Troop
                 case "Villain":
                 case "Orc":
                 case "Wolf":
-                    // Medium enemies
                     hp = (int)(40 * difficultyScalar);
                     attack = (int)(20 * difficultyScalar);
                     defense = (int)(15 * difficultyScalar);
@@ -233,7 +239,6 @@ public class Troop
                 case "Dark Knight":
                 case "Cultist":
                 case "Skeleton":
-                    // Stronger enemies
                     hp = (int)(35 * difficultyScalar);
                     attack = (int)(25 * difficultyScalar);
                     defense = (int)(12 * difficultyScalar);
@@ -248,9 +253,9 @@ public class Troop
                     break;
             }
 
-            // Add random variation to make battles less predictable (+/- 10%)
-            hp = (int)(hp * (0.9 + random.NextDouble() * 0.2));
-            attack = (int)(attack * (0.9 + random.NextDouble() * 0.2));
+            // Add ±10% random variation
+            hp      = (int)(hp      * (0.9 + random.NextDouble() * 0.2));
+            attack  = (int)(attack  * (0.9 + random.NextDouble() * 0.2));
             defense = (int)(defense * (0.9 + random.NextDouble() * 0.2));
 
             // Create and add the enemy
@@ -258,6 +263,8 @@ public class Troop
         }
     }
 
+
+    // === Display ===
     public void DisplayTroop(bool isFinalState = false)
     {
         if (isFinalState)
@@ -286,9 +293,11 @@ public class Troop
     }
 
 
+    // === Game Over Check ===
     public bool GameOverCheck(bool isPlayer)
     {
         int deadCharacters = 0;
+
         foreach (var character in _characters)
         {
             if (character.CurrentHp <= 0)
@@ -310,11 +319,12 @@ public class Troop
         return false;
     }
 
-    // New method to support future item/equipment system
+
+    // === Loot Hook (future) ===
     public void ApplyLoot(int characterIndex, string lootItem)
     {
-        // Future implementation for loot system
-        // This would modify character stats based on equipment/items found
+        // Future implementation for loot system:
+        // Adjust stats / equip items based on loot
         Console.WriteLine($"{_characters[characterIndex].Name} found: {lootItem}");
     }
 }
